@@ -39,10 +39,20 @@ public final class MonthSorterNested implements MonthSorter {
             return this.daysNumber;
         }
 
-        public Month fromString(String name){
+        public Month fromString(String name) throws Exception{
+            int matchCounter = 0;
+            Month match = null;
+
             for (Month m : this.values()) {
-                if(m.getName().contains(name.toUpperCase())) return m;
+                if(m.getName().startsWith(name.toUpperCase())){
+                    matchCounter++;
+                    match = m;
+                }
             }
+            
+            if(matchCounter > 1) throw new Exception("String match with multiple months, ambigous");
+            if(matchCounter < 1) throw new Exception("Input string do not match with any month");
+            return match;
         }
     }
 
