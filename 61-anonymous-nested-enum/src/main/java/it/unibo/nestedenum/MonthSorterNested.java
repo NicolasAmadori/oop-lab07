@@ -39,30 +39,55 @@ public final class MonthSorterNested implements MonthSorter {
             return this.daysNumber;
         }
 
-        public Month fromString(String name) throws Exception{
+        public static Month fromString(String name) throws IllegalArgumentException{
             int matchCounter = 0;
             Month match = null;
 
-            for (Month m : this.values()) {
+            for (Month m : Month.values()) {
                 if(m.getName().startsWith(name.toUpperCase())){
                     matchCounter++;
                     match = m;
                 }
             }
             
-            if(matchCounter > 1) throw new Exception("String match with multiple months, ambigous");
-            if(matchCounter < 1) throw new Exception("Input string do not match with any month");
+            if(matchCounter > 1) throw new IllegalArgumentException("String match with multiple months, ambigous");
+            if(matchCounter < 1) throw new IllegalArgumentException("Input string do not match with any month");
             return match;
         }
     }
 
     @Override
     public Comparator<String> sortByDays() {
-        return null;
+        return new Comparator<String>() {
+            
+            @Override
+            public int compare(String s1, String s2){
+                Month m1 = null, m2 = null;
+                m1 = Month.fromString(s1);
+                m2 = Month.fromString(s2);
+
+                return Integer.compare(m1.getDaysNumber(), m2.getDaysNumber());
+            };
+        };            
     }
 
     @Override
     public Comparator<String> sortByOrder() {
-        return null;
+        return new Comparator<String>() {
+            
+            @Override
+            public int compare(String s1, String s2){
+                int indexM1 = -1, indexM2 = -1;
+                Month m1 = null, m2 = null;
+                m1 = Month.fromString(s1);
+                m2 = Month.fromString(s2);
+
+                for (int i = 0; i < Month.values().length; i++) {
+                    if(Month.values()[i] == m1) indexM1 = i;
+                    else if(Month.values()[i] == m2) indexM2 = i;
+                }
+                return Integer.compare(indexM1, indexM2);
+            };
+        };   
     }
 }
