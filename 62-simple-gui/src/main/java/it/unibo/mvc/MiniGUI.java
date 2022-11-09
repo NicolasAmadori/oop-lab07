@@ -1,8 +1,12 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.GroupLayout.Alignment;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -26,20 +30,34 @@ public class MiniGUI {
     /**
      * Creates a new {@link MiniGUI}.
      */
-    public MiniGUI() {
+    public MiniGUI() {        
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        
+
+        //Parte 1
+        final JPanel newJPanel = new JPanel();
+        newJPanel.setLayout(new BoxLayout(newJPanel, BoxLayout.LINE_AXIS));//Perchè il pulsante rimane grande uguale? nel readme dice che dovrebbe diventare un po più piccolo
+        canvas.add(newJPanel, BorderLayout.CENTER);
+        newJPanel.add(write);
+
+        //Parte 2
+        final var testo = new JTextField("Result");
+        canvas.add(testo,BorderLayout.NORTH);
+
         frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
+                int random = randomGenerator.nextInt();
+                System.out.println(random);
+                //Parte 3
+                testo.setText("Result: " + random);
             }
         });
     }
