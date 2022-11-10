@@ -19,8 +19,7 @@ public class DrawNumberConsoleView implements DrawNumberView{
 
     @Override
     public void result(DrawResult res) {
-        // TODO Auto-generated method stub
-        
+        System.out.println(res.getDescription());        
     }
     
 }

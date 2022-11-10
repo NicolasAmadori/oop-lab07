@@ -82,7 +82,8 @@ public final class Configuration {
         private int min = MIN;
         private int max = MAX;
         private int attempts = ATTEMPTS;
-
+        private boolean consumed;
+        
         /**
          * Sets the minimum value.
          *
@@ -121,7 +122,11 @@ public final class Configuration {
          *
          * @return a {@code Configuration}
          */
-        public final Configuration build() {            
+        public final Configuration build() {
+            if (consumed) {
+                throw new IllegalStateException("The builder can only be used once");
+            }
+            consumed = true;            
             return new Configuration(max, min, attempts);
         }
     }

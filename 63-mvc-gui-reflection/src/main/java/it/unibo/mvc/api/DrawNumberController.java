@@ -10,7 +10,7 @@ public interface DrawNumberController {
      * 
      * @param n the attempt
      */
-    void newAttempt(DrawNumberView view, int n);
+    void newAttempt(int n);
 
     /**
      * Resets the current game (if any is running) and starts a new one.
